@@ -1,11 +1,15 @@
 import { Header, Heading } from "grommet";
 import React from "react";
 
-const GroupHeader: React.FC = () => {
+type Props = {
+  name: string;
+};
+
+const GroupHeader: React.FC<Props> = ({ name }) => {
   return (
     <Header background="neutral-2" justify="center">
       <Heading margin="xsmall" level="4">
-        5H - Miss Holdsworth
+        {name}
       </Heading>
     </Header>
   );

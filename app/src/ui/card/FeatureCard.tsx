@@ -1,24 +1,28 @@
 import { Card, CardBody } from "grommet";
 import React from "react";
+import { Link, useParams } from "react-router-dom";
+import { Feature } from "../../store/feature/featureSelectors";
 
 type Props = {
-  title: string;
-  color?: string;
+  feature: Feature;
 };
 
-const FeatureCard: React.FC<Props> = ({ title, color }) => {
+const FeatureCard: React.FC<Props> = ({ feature }) => {
+  const params = useParams<{ groupId: string }>();
   return (
     <Card
-      background={color}
+      background={feature.color}
       width="small"
       hoverIndicator
       focusIndicator
       margin="small"
-      onClick={() => alert("test")}
+      onClick={() => {}}
     >
-      <CardBody pad="medium" hoverIndicator>
-        {title}
-      </CardBody>
+      <Link to={`/${params.groupId}/${feature.shortId}`}>
+        <CardBody pad="medium" hoverIndicator>
+          {feature.name}
+        </CardBody>
+      </Link>
     </Card>
   );
 };

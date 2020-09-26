@@ -1,64 +1,52 @@
-import { Box, Button, Text } from "grommet";
+import { Box, Button } from "grommet";
 import React from "react";
-import Masonry from "react-masonry-component";
+import { useSelector } from "react-redux";
+import { useFirestoreConnect } from "react-redux-firebase";
+import { useParams } from "react-router-dom";
+import { selectFeatures } from "../../store/feature/featureSelectors";
+import { selectGroupByShortId } from "../../store/group/groupSelectors";
+import { RootState } from "../../store/rootReducer";
+import CardWall from "../../ui/card/CardWall";
 import FeatureCard from "../../ui/card/FeatureCard";
 import GroupHeader from "./components/GroupHeader";
 
 const GroupPage: React.FC = () => {
-  const features = [
+  const features = useSelector(selectFeatures);
+  const params = useParams<{ groupId: string }>();
+  useFirestoreConnect({ collection: "group" });
+  const group = useSelector((s: RootState) =>
+    selectGroupByShortId(s, params.groupId)
+  );
+  useFirestoreConnect([
     {
-      name: "Similies",
-      color: "#3D138D",
+      collection: "feature",
+      where: ["default", "==", true],
     },
     {
-      name: "Preposition",
-      color: "#A2423D",
+      collection: "group",
+      where: ["shortId", "==", params.groupId],
     },
-    {
-      name: "Personification",
-      color: "#FFCA58",
-    },
-    {
-      name: "Alliteration",
-      color: "#81FCED",
-    },
-    {
-      name: "Metaphors",
-      color: "#FD6FFF",
-    },
-    {
-      name: "Conjunctions",
-      color: "#6FFFB0",
-    },
-  ];
+  ]);
+
+  if (!group) return null;
 
   return (
     <>
-      <GroupHeader />
+      <GroupHeader name={group?.name} />
       <Box justify="center" margin="small">
         <Button
           alignSelf="center"
-          size="large"
+          size="medium"
           color="neutral-1"
           primary
           label="Add to the wall"
         />
       </Box>
-      <Box justify="center" alignSelf="center">
-        <Masonry
-          className="my-gallery-class" // default ''
-          elementType="div" // default 'div'
-          options={{ fitWidth: true, transitionDuration: 0 }}
-          style={{ margin: "0 auto" }}
-          disableImagesLoaded // default false
-          enableResizableChildren
-          updateOnEachImageLoad // default false and works only if disableImagesLoaded is false
-        >
-          {features.map((f) => (
-            <FeatureCard title={f.name} color={f.color} />
-          ))}
-        </Masonry>
-      </Box>
+      <CardWall>
+        {features.map((f) => (
+          <FeatureCard feature={f} />
+        ))}
+      </CardWall>
     </>
   );
 };
