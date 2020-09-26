@@ -1,28 +1,31 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from "react";
-import { Grommet, Heading, Nav } from "grommet";
+import { Box, Button, Grommet, Heading, Nav } from "grommet";
 import "./App.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useHistory,
+} from "react-router-dom";
 import { Provider } from "react-redux";
 import { ReactReduxFirebaseProvider } from "react-redux-firebase";
+import { LinkPrevious } from "grommet-icons";
 import GroupPage from "./pages/group/GroupPage";
 import HomePage from "./pages/home/HomePage";
 import { rrfProps, store } from "./store/config";
 import FeaturePage from "./pages/feature/FeaturePage";
 import AddPhrasePage from "./pages/add-phrase/AddPhrasePage";
+import NavBar from "./ui/nav/NavBar";
 
 const App: React.FC = () => {
   return (
     <Provider store={store}>
       <ReactReduxFirebaseProvider {...rrfProps}>
         <Grommet plain>
-          <div className="App">
-            <Nav background="brand" flex direction="row" justify="center">
-              <Heading margin="small" level="3">
-                Working Wall on the Web
-              </Heading>
-            </Nav>
-            <Router>
+          <Router>
+            <div className="App">
+              <NavBar />
               <Switch>
                 <Route exact path="/">
                   <HomePage />
@@ -37,8 +40,8 @@ const App: React.FC = () => {
                   <GroupPage />
                 </Route>
               </Switch>
-            </Router>
-          </div>
+            </div>
+          </Router>
         </Grommet>
       </ReactReduxFirebaseProvider>
     </Provider>

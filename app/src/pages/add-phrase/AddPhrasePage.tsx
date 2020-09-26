@@ -1,8 +1,10 @@
-import { firestore } from "firebase";
+import firebase from "firebase/app";
+import "firebase/firestore";
 import { Box, Button, Card, Form, FormField, Main, TextArea } from "grommet";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useFirestoreConnect } from "react-redux-firebase";
+import { useParams } from "react-router-dom";
 import { Feature, selectFeatures } from "../../store/feature/featureSelectors";
 import TagInput from "../components/TagInput";
 
@@ -10,6 +12,7 @@ const AddPhrasePage: React.FC = () => {
   const features = useSelector(selectFeatures);
   useFirestoreConnect({ collection: "feature" });
   const [text, setText] = useState("");
+  const params = useParams<{ groupId: string }>();
   const [selectedFeatures, setSelectedFeatures] = useState<Feature[]>([]);
   const onSelectFeature = (feature: Feature) => {
     if (selectedFeatures.find((f) => f.shortId === feature.shortId)) {
@@ -21,11 +24,13 @@ const AddPhrasePage: React.FC = () => {
     }
   };
   const onSubmit = () => {
-    firestore()
+    firebase
+      .firestore()
       .collection("phrase")
       .add({
         text,
         approved: false,
+        groupId: params.groupId,
         selectedFeatures: selectedFeatures.map((s) => s.shortId),
       });
   };

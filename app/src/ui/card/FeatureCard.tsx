@@ -17,6 +17,7 @@ const FeatureCard: React.FC<Props> = ({ feature }) => {
       focusIndicator
       margin="small"
       onClick={() => {}}
+      animation="fadeIn"
     >
       <Link to={`/${params.groupId}/${feature.shortId}`}>
         <CardBody pad="medium" hoverIndicator>
