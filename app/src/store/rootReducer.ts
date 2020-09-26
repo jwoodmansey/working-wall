@@ -4,7 +4,9 @@ import { firestoreReducer } from "redux-firestore";
 import firebase from "firebase/app";
 import "firebase/firestore";
 
-const firebaseConfig = {};
+const firebaseConfig = process.env.firebaseConfig
+  ? JSON.parse(process.env.firebaseConfig)
+  : {};
 
 // Initialize firebase instance
 firebase.initializeApp(firebaseConfig);

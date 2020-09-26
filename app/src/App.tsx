@@ -9,6 +9,7 @@ import GroupPage from "./pages/group/GroupPage";
 import HomePage from "./pages/home/HomePage";
 import { rrfProps, store } from "./store/config";
 import FeaturePage from "./pages/feature/FeaturePage";
+import AddPhrasePage from "./pages/add-phrase/AddPhrasePage";
 
 const App: React.FC = () => {
   return (
@@ -25,6 +26,9 @@ const App: React.FC = () => {
               <Switch>
                 <Route exact path="/">
                   <HomePage />
+                </Route>
+                <Route exact path="/:groupId/add">
+                  <AddPhrasePage />
                 </Route>
                 <Route path="/:groupId/:featureId">
                   <FeaturePage />

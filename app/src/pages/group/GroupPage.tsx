@@ -2,7 +2,7 @@ import { Box, Button } from "grommet";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useFirestoreConnect } from "react-redux-firebase";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { selectFeatures } from "../../store/feature/featureSelectors";
 import { selectGroupByShortId } from "../../store/group/groupSelectors";
 import { RootState } from "../../store/rootReducer";
@@ -34,13 +34,15 @@ const GroupPage: React.FC = () => {
     <>
       <GroupHeader name={group?.name} />
       <Box justify="center" margin="small">
-        <Button
-          alignSelf="center"
-          size="medium"
-          color="neutral-1"
-          primary
-          label="Add to the wall"
-        />
+        <Link to={`/${params.groupId}/add`}>
+          <Button
+            alignSelf="center"
+            size="medium"
+            color="neutral-1"
+            primary
+            label="Add to the wall"
+          />
+        </Link>
       </Box>
       <CardWall>
         {features.map((f) => (
