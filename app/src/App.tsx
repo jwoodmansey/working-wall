@@ -8,8 +8,6 @@ import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import GroupPage from "./pages/group/GroupPage";
 import HomePage from "./pages/home/HomePage";
 import { rrfProps, store } from "./store/config";
-import FeaturePage from "./pages/feature/FeaturePage";
-import AddPhrasePage from "./pages/add-phrase/AddPhrasePage";
 import NavBar from "./ui/nav/NavBar";
 
 const App: React.FC = () => {
