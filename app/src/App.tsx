@@ -1,16 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from "react";
-import { Box, Button, Grommet, Heading, Nav } from "grommet";
+import { Grommet } from "grommet";
 import "./App.css";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useHistory,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import { ReactReduxFirebaseProvider } from "react-redux-firebase";
-import { LinkPrevious } from "grommet-icons";
 import GroupPage from "./pages/group/GroupPage";
 import HomePage from "./pages/home/HomePage";
 import { rrfProps, store } from "./store/config";

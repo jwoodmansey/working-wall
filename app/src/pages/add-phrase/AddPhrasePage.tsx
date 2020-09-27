@@ -1,16 +1,19 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 import { Box, Button, Card, Form, FormField, Main, TextArea } from "grommet";
+import { Alert } from "grommet-icons";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useFirestoreConnect } from "react-redux-firebase";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Feature, selectFeatures } from "../../store/feature/featureSelectors";
 import TagInput from "../components/TagInput";
 
 const AddPhrasePage: React.FC = () => {
   const features = useSelector(selectFeatures);
   useFirestoreConnect({ collection: "feature" });
+  const history = useHistory();
+
   const [text, setText] = useState("");
   const params = useParams<{ groupId: string }>();
   const [selectedFeatures, setSelectedFeatures] = useState<Feature[]>([]);
@@ -23,16 +26,19 @@ const AddPhrasePage: React.FC = () => {
       setSelectedFeatures([...selectedFeatures, feature]);
     }
   };
-  const onSubmit = () => {
-    firebase
+  const onSubmit = async () => {
+    await firebase
       .firestore()
       .collection("phrase")
       .add({
         text,
-        approved: false,
+        approved: null,
         groupId: params.groupId,
-        selectedFeatures: selectedFeatures.map((s) => s.shortId),
+        selectedFeatures: selectedFeatures.map((s) => s.id),
+        createdAt: firebase.firestore.Timestamp.now(),
       });
+    history.push(`/${params.groupId}`);
+    alert("Your idea will show on the wall when it's been approved!");
   };
 
   return (

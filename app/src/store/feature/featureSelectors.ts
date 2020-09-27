@@ -7,11 +7,18 @@ export type Feature = {
   shortId: string;
   default: boolean;
   groupId: string;
+  description?: string;
+  id: string;
 };
 
 export const selectFeatures: Selector<RootState, Feature[]> = (state) => {
   const features = state.firestore.data.feature;
-  return features ? Object.values(features) : [];
+  return features
+    ? Object.keys(features).map((key) => ({
+        ...features[key],
+        id: key,
+      }))
+    : [];
 };
 
 export const selectFeatureByShortId = createSelector(
