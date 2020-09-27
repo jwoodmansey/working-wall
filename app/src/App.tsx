@@ -24,12 +24,6 @@ const App: React.FC = () => {
                 <Route exact path="/">
                   <HomePage />
                 </Route>
-                <Route exact path="/:groupId/add">
-                  <AddPhrasePage />
-                </Route>
-                <Route path="/:groupId/:featureId">
-                  <FeaturePage />
-                </Route>
                 <Route path="/:groupId">
                   <GroupPage />
                 </Route>
