@@ -1,7 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 import { Box, Button, Card, Form, FormField, Main, TextArea } from "grommet";
-import { Alert } from "grommet-icons";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useFirestoreConnect } from "react-redux-firebase";
