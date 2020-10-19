@@ -20,19 +20,19 @@ export const selectPhrasesByFeatureId = createSelector(
     selectFeatures,
     (_: RootState, props: { groupId?: string; featureId: string }) => props,
   ],
-  (phrases, features, props) =>
-    phrases
+  (phrases, features, props) => {
+    console.log("PROPS", props, phrases);
+    return phrases
       .filter(
         (p) =>
-          !(
-            p.groupId === props.groupId &&
-            p.selectedFeatures.includes(props.featureId)
-          )
+          p.groupId === props.groupId &&
+          p.selectedFeatures.includes(props.featureId)
       )
       .map((p) => ({
         ...p,
         populatedFeatures: p.selectedFeatures.map((sf) =>
           features.find((f) => f.id === sf)
         ),
-      }))
+      }));
+  }
 );

@@ -34,9 +34,15 @@ const FeaturePage: React.FC = () => {
       : []),
   ]);
 
-  const phrases = useSelector((s: RootState) =>
-    selectPhrasesByFeatureId(s, params)
-  );
+  const phrases = useSelector((s: RootState) => {
+    if (!feature) {
+      return [];
+    }
+    return selectPhrasesByFeatureId(s, {
+      groupId: params.groupId,
+      featureId: feature.id,
+    });
+  });
   if (!feature) return null;
 
   return (
